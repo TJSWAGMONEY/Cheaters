@@ -18,6 +18,8 @@
 
 using namespace std;
 
+//Method provided in dir_help.cpp
+//Fills a string vector with filenames from a directory input as a string
 int getdir (string dir, vector<string> &files)
 {
     DIR *dp;
@@ -36,11 +38,12 @@ int getdir (string dir, vector<string> &files)
 
 int main(int argc, char *argv[]) {
 
-    string input = argv[1];
-    cout << input << endl;
-    string dir = "asdf";
+    //Creates a string and a vector to use for the getdir method
+    string dir = argv[1];
     vector<string> files = vector<string>();
 
+    //Gets filenames from the directory input in the command line
+    //and puts them in the "files" vector
     getdir(dir,files);
 
     for (unsigned int i = 0;i < files.size();i++) {

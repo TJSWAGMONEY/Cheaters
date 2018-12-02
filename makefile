@@ -6,6 +6,7 @@
 
 plagiarismCatcher: plagiarismCatcher.o
 	g++ -oplagiarismCatcher  plagiarismCatcher.o
+	rm plagiarismCatcher.o
 #also include header files here
 plagiarismCatcher.o: plagiarismCatcher.cpp
 	g++ -c plagiarismCatcher.cpp
