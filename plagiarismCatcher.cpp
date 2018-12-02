@@ -51,8 +51,9 @@ int main(int argc, char *argv[]) {
     getdir(dir,files);
 
     ifstream inputFile;
-    queue <string> buffer;
+    queue <string> nwords;
     int qSize = atoi(argv[2]);
+    string buffer;
 
     while((files.size()) > 0) {
 
@@ -69,7 +70,18 @@ int main(int argc, char *argv[]) {
         files.pop_back();
 
         if(inputFile.is_open()) {
-            //Do whatever is needed with text from file
+
+            inputFile >> buffer; //this is the line that isn't working
+            //Trying to read word by word from input file into queue
+            //After the first case (when it hits n words) the queue
+            //  will iterate through the file and put n-word frames
+            //  into the hash function hash()
+            //We also need to remove punctuation (probably in buffer string)
+            //  and make all of the letters uppercase (can use helper function
+            //  for that)
+            //We're then gonna take the integer from the hash and use it to
+            //  put the filename in the hash table
+
         }
         else {
             cout << "Error: File could not be opened." << endl;
