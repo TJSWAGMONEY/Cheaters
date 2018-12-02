@@ -14,7 +14,11 @@
 #include <errno.h>
 #include <vector>
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
+#include <fstream>
+#include <queue>
 
 using namespace std;
 
@@ -46,9 +50,37 @@ int main(int argc, char *argv[]) {
     //and puts them in the "files" vector
     getdir(dir,files);
 
-    for (unsigned int i = 0;i < files.size();i++) {
+    ifstream inputFile;
+    queue <string> buffer;
+    int qSize = atoi(argv[2]);
+
+    while((files.size()) > 0) {
+
+        //Adds directory to front of filename in vector
+        //This allows the file to be opened and read
+        files[(files.size())-1] = dir + "/" + files[(files.size())-1];
+
+        //Opens the file
+        inputFile.open((files.back()).c_str());
+
+        //cout << files.back() << endl;    //Prints the file it's opening
+
+        //Removes the filename from the end of the vector
+        files.pop_back();
+
+        if(inputFile.is_open()) {
+            //Do whatever is needed with text from file
+        }
+        else {
+            cout << "Error: File could not be opened." << endl;
+        }
+
+    }
+
+/*  for (unsigned int i = 0;i < files.size();i++) {    //Tests if getdir is working
         cout << i << files[i] << endl;
     }
+*/
 
     return 0;
 
