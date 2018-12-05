@@ -1,31 +1,32 @@
 #include <iostream>
 #include <string>
-#include <queue>
+#include <vector>
+
 using namespace std;
+
+const int MAX = 100003;
 
 class HashTable {
 public:
     HashTable();
-    HashTable(string filename);
-
-    string search(const string& key);
-    void insert(const string& key, const string& value);
-    string remove(const string& key);
-    void display();
+/*    string remove(const int key);
+    string search(const int key);*/
+    void insert(const int key, const int value);
 
     unsigned int hash(const string& key);
-    int search_index(const string& key, bool override_duplicated_key);
+    int search_index(const int key, bool dupKeyFlag);
 
 private:
-    const static unsigned int size_max = 100;
-    string keys[size_max];
-    string values[size_max];
+    const static unsigned int size_max = MAX;
+    int keys[size_max];
+    vector<int> values[size_max];
 };
 
 HashTable::HashTable() {
     for (int i = 0; i < size_max; i++) {
-        keys[i] = string();
-        values[i] = string();
+        keys[i] = -1;
+        vector<int> myPath;
+        values[i] = myPath;
     }
 }
 
@@ -37,22 +38,16 @@ unsigned int HashTable::hash(const string& k)
     return value;
 }
 
-void HashTable::display() {
-    cout << "{";
-    for (int i = 0; i < size_max; i++)
-        if (!keys[i].empty())
-            cout << keys[i] << ":" << values[i] << ", ";
-    cout << "}" << endl;
-}
-
-int HashTable::search_index(const string& key, bool override_duplicate_key = true) {
-    unsigned int h = hash(key) % size_max, offset = 0, index;
+int HashTable::search_index(const int key, bool dupKeyFlag = true) {
+    unsigned int h = hash(to_string(key)) % size_max;
+    unsigned int offset = 0;
+    unsigned int index;
 
     while (offset < size_max) {
         index = (h + offset) % size_max;
 
-        // if override_duplicate_key is false, return a new, unused index, used in hashTable
-        if (keys[index].empty() || (override_duplicate_key && keys[index] == key))
+        // if dupKeyFlag is false, return a new, unused index, used in hashTable
+        if (keys[index] == -1 || dupKeyFlag && keys[index] == key)
             return index;
 
         offset++;
@@ -60,7 +55,7 @@ int HashTable::search_index(const string& key, bool override_duplicate_key = tru
     return -1;
 }
 
-void HashTable::insert(const string& key, const string& value) {
+void HashTable::insert(const int key, const int value) {
     int index = search_index(key);
     if (index == -1) {
         cerr << "Table is full!" << endl;
@@ -68,10 +63,11 @@ void HashTable::insert(const string& key, const string& value) {
     }
 
     keys[index] = key;
-    values[index] = value;
+    values[index].push_back(value);
 }
 
-string HashTable::search(const string& key) {
+/*
+string HashTable::search(const int key) {
     int index = search_index(key);
     if (index != -1)
         return values[index];
@@ -79,7 +75,7 @@ string HashTable::search(const string& key) {
     return "";
 }
 
-string HashTable::remove(const string& key) {
+string HashTable::remove(const int key) {
     int index = search_index(key);
     if (index == -1) return "";
 
@@ -88,4 +84,4 @@ string HashTable::remove(const string& key) {
     values[index].clear();
 
     return value;
-}
+}*/
