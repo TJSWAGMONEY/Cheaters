@@ -12,7 +12,7 @@ public:
 /*    string remove(const int key);
     string search(const int key);*/
     void insert(const int key, const int value);
-
+    void findCols(vector<string> fileName);
     unsigned int hash(const string& key);
     int search_index(const int key, bool dupKeyFlag);
 
@@ -64,6 +64,21 @@ void HashTable::insert(const int key, const int value) {
 
     keys[index] = key;
     values[index].push_back(value);
+}
+
+void HashTable::findCols(vector<string> fileName) {
+    int map[fileName.size()][fileName.size()];
+    for (int i = 0; i < fileName.size(); i++) {
+        for (int j = 0; j < fileName.size(); j++)
+            map[i][j] = 0;      //i: row; j: col; map[row][col]
+    }
+
+    //i: row  j: col    k: col
+    for (int i = 2; i < size_max; i++) {
+        for (int j = 0; j < values[i].size()-1; j++)
+            for (int k = j+1; k < values[i].size(); k++)
+                map[j][k]++;
+    }
 }
 
 /*
