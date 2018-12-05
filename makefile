@@ -8,7 +8,6 @@ plagiarismCatcher: plagiarismCatcher.o
 	g++ -oplagiarismCatcher  plagiarismCatcher.o
 	rm plagiarismCatcher.o
 	clear
-#also include header files here
-plagiarismCatcher.o: plagiarismCatcher.cpp
+plagiarismCatcher.o: plagiarismCatcher.cpp hashTable.h
 	g++ -c plagiarismCatcher.cpp
 	

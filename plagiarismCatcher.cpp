@@ -19,7 +19,7 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
-#include <hashTable.h>
+#include "hashTable.h"
 
 using namespace std;
 
@@ -219,7 +219,7 @@ int main(int argc, char *argv[]) {
                 }
                 else {
                     //cout << createKey(nwords) << endl;
-                    h.hash(createKey(nwords));
+                    h.insert(h.hash(createKey(nwords)), ((files.size()) - 1));
                     nwords.pop();
                     nwords.push(buffer);
                 }
