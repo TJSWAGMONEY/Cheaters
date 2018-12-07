@@ -219,7 +219,7 @@ int main(int argc, char *argv[]) {
                     nwords.push(buffer);   
                 }
                 else {
-                    h.insert(h.hash(createKey(nwords)), ((files.size()) - 1));
+                    h.insert(h.hash(createKey(nwords)), (files.size()));
                     nwords.pop();
                     nwords.push(buffer);
                 }

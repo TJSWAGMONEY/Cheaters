@@ -64,6 +64,8 @@ void HashTable::insert(const unsigned int key, const int value) {
     }
     keys[index] = key;
     values[index].push_back(value);
+    //if(value > 24)
+       //cout << "Adding " << value << " to index " << index << " in the hash table." << endl;
 }
 
 void HashTable::findCols(vector<string> fileName, int compSize) {
@@ -96,10 +98,12 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
             }
         }
     }
+
     //Selection Sort
     int minData, tempData;
     int minIdx;
     string minPath1, minPath2, tempPath1, tempPath2;
+    bool swapVar;
     for (int i = 0; i < colNums.size()-1; i++) {
         minData = colNums[i];
         minPath1 = fileOne[i];
@@ -109,6 +113,8 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
         tempPath1 = fileOne[i];
         tempPath2 = fileTwo[i];
 
+        swapVar = false;
+
         for (int j = i+1; j < colNums.size(); j++) {
             // gets smallest in unsorted portion
             if (minData > colNums[j]) {
@@ -116,23 +122,28 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
                 minPath1 = fileOne[j];
                 minPath2 = fileTwo[j];
                 minIdx = j;
+                swapVar = true;
             }
         }
 
         // swapping
+        if(swapVar == true) {
         colNums[i] = minData;
         fileOne[i] = minPath1;
         fileTwo[i] = minPath2;
-
         colNums[minIdx] = tempData;
         fileOne[minIdx] = tempPath1;
         fileTwo[minIdx] = tempPath2;
-
+        }
     }
 
-    for(int i=0; i < colNums.size(); i++) {
-        cout << colNums[i] << " collisions: " << fileOne[i] << " and " << fileTwo[i] << endl;
+    cout << endl;
+    for(int i=1; i <= colNums.size(); i++) {
+        cout << colNums[colNums.size() - i] << " collisions: " 
+             << fileOne[colNums.size() - i] << " and " 
+             << fileTwo[colNums.size() - i] << endl;
     }
+    cout << endl;
 
 }
 
