@@ -232,7 +232,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    //h.findCols(files);
+    h.findCols(files);
 
     return 0;
 }
