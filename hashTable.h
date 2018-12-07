@@ -73,11 +73,13 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
             map[i][j] = 0;      //i: row; j: col; map[row][col]
     }
 
-    //i: row  j: col    k: col
+    /* i: position in hash table (array)
+     * j: element in value vector (map: row)
+     * k: element in value vector (map: col)*/
     for (int i = 0; i < size_max; i++) {
         for (int j = 0; j < values[i].size()-1; j++)
             for (int k = j+1; k < values[i].size(); k++)
-                map[j][k]++;
+                map[values[i][k]][values[i][j]]++;
     }
 
     for(int i = 2; i < fileName.size(); i++) {
