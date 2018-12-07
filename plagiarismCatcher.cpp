@@ -232,6 +232,8 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    //h.findCols(files);
+
     return 0;
 }
 
