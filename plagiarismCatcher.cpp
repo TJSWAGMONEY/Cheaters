@@ -193,6 +193,7 @@ int main(int argc, char *argv[]) {
     //Gets filenames from the directory input in the command line
     //and puts them in the "files" vector
     getdir(dir,files);
+    vector<string> filesCopy = files;
 
     //Loops for each filename in the vector, except for the first two
     //This is because the first two are "." and ".."
@@ -231,7 +232,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    h.findCols(files, numSims);
+    h.findCols(filesCopy, numSims);
 
     return 0;
 }

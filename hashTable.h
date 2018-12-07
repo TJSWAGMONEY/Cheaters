@@ -11,7 +11,7 @@ public:
     HashTable();
 /*    string remove(const int key);
     string search(const int key);*/
-    void insert(const int key, const int value);
+    void insert(const unsigned int key, const int value);
     void findCols(vector<string> fileName, int compSize);
     unsigned int hash(const string& key);
     int search_index(const int key, bool dupKeyFlag);
@@ -55,36 +55,33 @@ int HashTable::search_index(const int key, bool dupKeyFlag = true) {
     return -1;
 }
 
-void HashTable::insert(const int key, const int value) {
+void HashTable::insert(const unsigned int key, const int value) {
+
     int index = search_index(key);
     if (index == -1) {
         cerr << "Table is full!" << endl;
         return;
     }
-
     keys[index] = key;
     values[index].push_back(value);
 }
 
 void HashTable::findCols(vector<string> fileName, int compSize) {
-    cout << "Entering function" << endl;
     int map[fileName.size()][fileName.size()];
     for (int i = 0; i < fileName.size(); i++) {
         for (int j = 0; j < fileName.size(); j++)
             map[i][j] = 0;      //i: row; j: col; map[row][col]
     }
-    cout << "Map initialized" << endl;
     /* i: position in hash table (array)
      * j: element in value vector (map: row)
      * k: element in value vector (map: col)*/
     for (int i = 0; i < size_max; i++) {
-        for (int j = 0; j < values[i].size()-1; j++) {
-            for (int k = j+1; k < values[i].size(); k++) {
+        for (int j = 0; !values[i].empty() && (j < (values[i]).size()-1); j++) {
+            for (int k = j+1; k < (values[i]).size(); k++) {
                 map[values[i][k]][values[i][j]]++;
             }
         }
     }
-    cout << "Map populated" << endl;
 
     vector<int> colNums;
     vector<string> fileOne;
@@ -99,7 +96,6 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
             }
         }
     }
-    cout << "Vectors filled" << endl;
     //Selection Sort
     int minData, tempData;
     int minIdx;
@@ -115,7 +111,6 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
 
         for (int j = i+1; j < colNums.size(); j++) {
             // gets smallest in unsorted portion
-            cout << "in sorting" << j << endl;
             if (minData > colNums[j]) {
                 minData = colNums[j];
                 minPath1 = fileOne[j];
