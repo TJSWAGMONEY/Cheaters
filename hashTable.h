@@ -39,7 +39,7 @@ unsigned int HashTable::hash(const string& k)
 }
 
 int HashTable::search_index(const int key, bool dupKeyFlag = true) {
-    unsigned int h = hash(to_string(key)) % size_max;
+    unsigned int h = hash(to_string(static_cast<long long>(key))) % size_max;
     unsigned int offset = 0;
     unsigned int index;
 

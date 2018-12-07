@@ -9,5 +9,5 @@ plagiarismCatcher: plagiarismCatcher.o
 	rm plagiarismCatcher.o
 	clear
 plagiarismCatcher.o: plagiarismCatcher.cpp hashTable.h
-	g++ -c plagiarismCatcher.cpp
+	g++ -std=c++0x -c plagiarismCatcher.cpp
 	
