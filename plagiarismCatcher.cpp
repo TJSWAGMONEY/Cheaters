@@ -206,8 +206,6 @@ int main(int argc, char *argv[]) {
         //Opens the file
         inputFile.open((files.back()).c_str());
 
-        //cout << files.back() << endl;
-
         //Removes the filename from the end of the vector
         files.pop_back();
         if(inputFile.is_open()) {
@@ -215,10 +213,15 @@ int main(int argc, char *argv[]) {
 
                 inputFile >> buffer;
 
+                //Initial n words are put into the queue
                 if((nwords.size()) != qSize) {
                     nwords.push(buffer);   
                 }
                 else {
+                    //Calls the insert and hash functions.
+                    //Processes all of the chunks and
+                    //puts the index of the corresponding file
+                    //in the hash table.
                     h.insert(h.hash(createKey(nwords)), (files.size()));
                     nwords.pop();
                     nwords.push(buffer);
@@ -232,6 +235,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    //Calls the findCols function to produce the output
     h.findCols(filesCopy, numSims);
 
     return 0;
