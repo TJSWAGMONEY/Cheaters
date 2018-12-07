@@ -74,7 +74,7 @@ void HashTable::findCols(vector<string> fileName) {
     }
 
     //i: row  j: col    k: col
-    for (int i = 2; i < size_max; i++) {
+    for (int i = 0; i < size_max; i++) {
         for (int j = 0; j < values[i].size()-1; j++)
             for (int k = j+1; k < values[i].size(); k++)
                 map[j][k]++;
