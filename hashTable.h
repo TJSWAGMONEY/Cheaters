@@ -67,26 +67,25 @@ void HashTable::insert(const int key, const int value) {
 }
 
 void HashTable::findCols(vector<string> fileName, int compSize) {
+    cout << "Entering function" << endl;
     int map[fileName.size()][fileName.size()];
     for (int i = 0; i < fileName.size(); i++) {
         for (int j = 0; j < fileName.size(); j++)
             map[i][j] = 0;      //i: row; j: col; map[row][col]
     }
-
+    cout << "Map initialized" << endl;
     /* i: position in hash table (array)
      * j: element in value vector (map: row)
      * k: element in value vector (map: col)*/
     for (int i = 0; i < size_max; i++) {
-        for (int j = 0; j < values[i].size()-1; j++)
-            for (int k = j+1; k < values[i].size(); k++)
+        for (int j = 0; j < values[i].size()-1; j++) {
+            for (int k = j+1; k < values[i].size(); k++) {
                 map[values[i][k]][values[i][j]]++;
+            }
+        }
     }
+    cout << "Map populated" << endl;
 
-//
-    for(int i=0; i < colNums.size(); i++) {
-        cout << colNums[i] << " collisions: " << fileOne[i] << " and " << fileTwo[i] << endl;
-    }
-//
     vector<int> colNums;
     vector<string> fileOne;
     vector<string> fileTwo;
@@ -100,8 +99,8 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
             }
         }
     }
-    
-        //Selection Sort
+    cout << "Vectors filled" << endl;
+    //Selection Sort
     int minData, tempData;
     int minIdx;
     string minPath1, minPath2, tempPath1, tempPath2;
@@ -116,6 +115,7 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
 
         for (int j = i+1; j < colNums.size(); j++) {
             // gets smallest in unsorted portion
+            cout << "in sorting" << j << endl;
             if (minData > colNums[j]) {
                 minData = colNums[j];
                 minPath1 = fileOne[j];
@@ -134,6 +134,11 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
         fileTwo[minIdx] = tempPath2;
 
     }
+
+    for(int i=0; i < colNums.size(); i++) {
+        cout << colNums[i] << " collisions: " << fileOne[i] << " and " << fileTwo[i] << endl;
+    }
+
 }
 
 /*

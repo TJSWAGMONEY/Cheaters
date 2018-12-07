@@ -218,7 +218,6 @@ int main(int argc, char *argv[]) {
                     nwords.push(buffer);   
                 }
                 else {
-                    //cout << createKey(nwords) << endl;
                     h.insert(h.hash(createKey(nwords)), ((files.size()) - 1));
                     nwords.pop();
                     nwords.push(buffer);
@@ -232,7 +231,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    h.findCols(files);
+    h.findCols(files, numSims);
 
     return 0;
 }
