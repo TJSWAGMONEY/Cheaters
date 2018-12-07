@@ -82,9 +82,22 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
                 map[values[i][k]][values[i][j]]++;
     }
 
+//
+    for(int i=0; i < colNums.size(); i++) {
+        cout << colNums[i] << " collisions: " << fileOne[i] << " and " << fileTwo[i] << endl;
+    }
+//
+    vector<int> colNums;
+    vector<string> fileOne;
+    vector<string> fileTwo;
+
     for(int i = 2; i < fileName.size(); i++) {
         for(int j = (i+1); j < fileName.size(); j++) {
-            //
+            if(map[i][j] >= compSize){
+                colNums.push_back(map[i][j]);
+                fileOne.push_back(fileName[i]);
+                fileTwo.push_back(fileName[j]);
+            }
         }
     }
 }
