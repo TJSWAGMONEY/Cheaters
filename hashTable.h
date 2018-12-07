@@ -4,13 +4,11 @@
 
 using namespace std;
 
-const int MAX = 100003;
+const int MAX = 200001;
 
 class HashTable {
 public:
     HashTable();
-/*    string remove(const int key);
-    string search(const int key);*/
     void insert(const unsigned int key, const int value);
     void findCols(vector<string> fileName, int compSize);
     unsigned int hash(const string& key);
@@ -30,6 +28,7 @@ HashTable::HashTable() {
     }
 }
 
+//The hash function
 unsigned int HashTable::hash(const string& k)
 {
     unsigned int value = 0 ;
@@ -38,6 +37,7 @@ unsigned int HashTable::hash(const string& k)
     return value;
 }
 
+//Helper function for insert
 int HashTable::search_index(const int key, bool dupKeyFlag = true) {
     unsigned int h = hash(to_string(static_cast<long long>(key))) % size_max;
     unsigned int offset = 0;
@@ -55,6 +55,7 @@ int HashTable::search_index(const int key, bool dupKeyFlag = true) {
     return -1;
 }
 
+//Function for inserting values into the hash table
 void HashTable::insert(const unsigned int key, const int value) {
 
     int index = search_index(key);
@@ -64,16 +65,20 @@ void HashTable::insert(const unsigned int key, const int value) {
     }
     keys[index] = key;
     values[index].push_back(value);
-    //if(value > 24)
-       //cout << "Adding " << value << " to index " << index << " in the hash table." << endl;
 }
 
+//Function that finds the collisions in the hash table and
+//prints that information
 void HashTable::findCols(vector<string> fileName, int compSize) {
+
+    //Initializes 2D array to store number of collisions
+    //between files
     int map[fileName.size()][fileName.size()];
     for (int i = 0; i < fileName.size(); i++) {
         for (int j = 0; j < fileName.size(); j++)
             map[i][j] = 0;      //i: row; j: col; map[row][col]
     }
+
     /* i: position in hash table (array)
      * j: element in value vector (map: row)
      * k: element in value vector (map: col)*/
@@ -89,12 +94,14 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
     vector<string> fileOne;
     vector<string> fileTwo;
 
+    //Uses the map to fill the vectors with the information
+    //indicating the amount of collisions between files
     for(int i = 2; i < fileName.size(); i++) {
         for(int j = (i+1); j < fileName.size(); j++) {
-            if(map[i][j] >= compSize){
+            if(map[i][j] >= compSize){ //Checks against input parameter
                 colNums.push_back(map[i][j]);
-                fileOne.push_back(fileName[i]);
-                fileTwo.push_back(fileName[j]);
+                fileOne.push_back(fileName[i]); //Get file names
+                fileTwo.push_back(fileName[j]); //
             }
         }
     }
@@ -104,7 +111,9 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
     int minIdx;
     string minPath1, minPath2, tempPath1, tempPath2;
     bool swapVar;
+
     for (int i = 0; i < colNums.size()-1; i++) {
+
         minData = colNums[i];
         minPath1 = fileOne[i];
         minPath2 = fileTwo[i];
@@ -116,7 +125,8 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
         swapVar = false;
 
         for (int j = i+1; j < colNums.size(); j++) {
-            // gets smallest in unsorted portion
+
+            //Gets smallest in unsorted portion
             if (minData > colNums[j]) {
                 minData = colNums[j];
                 minPath1 = fileOne[j];
@@ -126,7 +136,7 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
             }
         }
 
-        // swapping
+        //Swaps the elements of the vectors
         if(swapVar == true) {
         colNums[i] = minData;
         fileOne[i] = minPath1;
@@ -137,32 +147,15 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
         }
     }
 
+    //Prints the sorted vectors
     cout << endl;
     for(int i=1; i <= colNums.size(); i++) {
         cout << colNums[colNums.size() - i] << " collisions: " 
              << fileOne[colNums.size() - i] << " and " 
              << fileTwo[colNums.size() - i] << endl;
+
     }
     cout << endl;
 
 }
 
-/*
-string HashTable::search(const int key) {
-    int index = search_index(key);
-    if (index != -1)
-        return values[index];
-
-    return "";
-}
-
-string HashTable::remove(const int key) {
-    int index = search_index(key);
-    if (index == -1) return "";
-
-    string value = values[index];
-    keys[index].clear();
-    values[index].clear();
-
-    return value;
-}*/
