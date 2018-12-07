@@ -100,6 +100,40 @@ void HashTable::findCols(vector<string> fileName, int compSize) {
             }
         }
     }
+    
+        //Selection Sort
+    int minData, tempData;
+    int minIdx;
+    string minPath1, minPath2, tempPath1, tempPath2;
+    for (int i = 0; i < colNums.size()-1; i++) {
+        minData = colNums[i];
+        minPath1 = fileOne[i];
+        minPath2 = fileTwo[i];
+
+        tempData = colNums[i];
+        tempPath1 = fileOne[i];
+        tempPath2 = fileTwo[i];
+
+        for (int j = i+1; j < colNums.size(); j++) {
+            // gets smallest in unsorted portion
+            if (minData > colNums[j]) {
+                minData = colNums[j];
+                minPath1 = fileOne[j];
+                minPath2 = fileTwo[j];
+                minIdx = j;
+            }
+        }
+
+        // swapping
+        colNums[i] = minData;
+        fileOne[i] = minPath1;
+        fileTwo[i] = minPath2;
+
+        colNums[minIdx] = tempData;
+        fileOne[minIdx] = tempPath1;
+        fileTwo[minIdx] = tempPath2;
+
+    }
 }
 
 /*
